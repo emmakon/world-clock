@@ -31,6 +31,10 @@ function updateTime() {
   }
 }
 
+function reloadPage(event) {
+  location.reload();
+}
+
 function updateCity(event) {
   let cityTimeZone = event.target.value;
 
@@ -54,10 +58,13 @@ function updateCity(event) {
     )}</small></div>
         </div>
         `;
-
-    let dropdownElement = document.querySelector("#dropdown");
-    dropdownElement.innerHTML = `<a href="https://world-clock-ek.netlify.app/" class="reset">Reset World Clock</a>`;
   });
+  let citySelectElement = document.querySelector("#city");
+  citySelectElement.style.display = "none";
+
+  let resetButton = document.querySelector("#reset-button");
+  resetButton.style.display = "block";
+  resetButton.addEventListener("click", reloadPage);
 }
 
 updateTime();
