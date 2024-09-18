@@ -44,7 +44,7 @@ function updateCity(event) {
     let citiesElement = document.querySelector("#cities");
 
     citiesElement.innerHTML = `
-  <div class="city">
+  <div class="city last-child">
     <div class="city_date">
         <h2>${cityName}</h2>
         <div class="date">${cityTime.format("MMMM Do, YYYY")}</div>
@@ -56,7 +56,7 @@ function updateCity(event) {
         `;
 
     let dropdownElement = document.querySelector("#dropdown");
-    dropdownElement.innerHTML = `<a href="/" class="reset">Reset World Clock</a>`;
+    dropdownElement.innerHTML = `<a href="https://world-clock-ek.netlify.app/" class="reset">Reset World Clock</a>`;
   });
 }
 
