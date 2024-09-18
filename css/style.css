@@ -45,6 +45,10 @@ a:hover {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
+.dropdown {
+  margin: 0 auto;
+}
+
 .date {
   font-size: 16px;
   opacity: 0.6;
@@ -60,6 +64,22 @@ a:hover {
   font-size: 20px;
   position: relative;
   top: -7px;
+}
+
+.reset {
+  text-align: center;
+  color: #fff;
+  background: lightpink;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.reset:hover {
+  cursor: pointer;
+  color: lightpink;
+  background: #fff;
+  border: 1px solid lightpink;
+  text-decoration: none;
 }
 
 footer {

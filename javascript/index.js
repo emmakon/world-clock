@@ -37,22 +37,27 @@ function updateCity(event) {
   if (event.target.value === "current") {
     cityTimeZone = moment.tz.guess();
   }
-  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
-  let cityTime = moment().tz(cityTimeZone);
-  let citiesElement = document.querySelector("#cities");
 
-  citiesElement.innerHTML = `
+  setInterval(function () {
+    let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+    let cityTime = moment().tz(cityTimeZone);
+    let citiesElement = document.querySelector("#cities");
+
+    citiesElement.innerHTML = `
   <div class="city">
     <div class="city_date">
         <h2>${cityName}</h2>
         <div class="date">${cityTime.format("MMMM Do, YYYY")}</div>
     </div>
     <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-    "A"
-  )}</small></div>
+      "A"
+    )}</small></div>
         </div>
-        <a href="/">View All Cities</a>
         `;
+
+    let dropdownElement = document.querySelector("#dropdown");
+    dropdownElement.innerHTML = `<a href="/" class="reset">Reset World Clock</a>`;
+  });
 }
 
 updateTime();
