@@ -1,90 +1,56 @@
-function updateTime() {
-  //Los Angeles
-  let losAngelesElement = document.querySelector("#los-angeles");
+//If update citiesArray manually below, update citiesArray.length logic in updateCity function
+let citiesArray = ["America/Vancouver", "Europe/Paris", "Asia/Taipei"];
 
-  if (losAngelesElement) {
-    let losAngelesDateElement = losAngelesElement.querySelector(".date");
-    let losAngelesTimeElement = losAngelesElement.querySelector(".time");
+function displayCities(citiesArray) {
+  let citiesElement = document.querySelector("#cities");
+  let citiesHtml = "";
 
-    let losAngelesZone = moment().tz("America/Los_Angeles");
+  citiesArray.forEach(function (city, index) {
+    let cityTimeZone = city;
+    if (city === "current") {
+      cityTimeZone = moment.tz.guess();
+    }
+    let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+    let cityTime = moment().tz(cityTimeZone);
 
-    losAngelesDateElement.innerHTML = losAngelesZone.format("MMMM Do, YYYY");
+    if (index < 5) {
+      citiesHtml =
+        citiesHtml +
+        `
+  <div class="city">
+    <div class="city_date">
+        <h2>${cityName}</h2>
+        <div class="date">${cityTime.format("MMMM Do, YYYY")}</div>
+    </div>
+    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
+          "A"
+        )}</small></div>
+        </div>
+        `;
+    }
+  });
+  citiesElement.innerHTML = citiesHtml;
+}
 
-    losAngelesTimeElement.innerHTML = losAngelesZone.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
+function updateCity(event) {
+  if (citiesArray.length > 3) {
+    citiesArray.shift();
   }
-  //Paris
-  let parisElement = document.querySelector("#paris");
+  citiesArray.unshift(event.target.value);
 
-  if (parisElement) {
-    let parisDateElement = parisElement.querySelector(".date");
-    let parisTimeElement = parisElement.querySelector(".time");
+  let resetButton = document.querySelector("#reset-button");
+  resetButton.style.display = "block";
+  resetButton.addEventListener("click", reloadPage);
 
-    let parisZone = moment().tz("Europe/Paris");
-
-    parisDateElement.innerHTML = parisZone.format("MMMM Do, YYYY");
-
-    parisTimeElement.innerHTML = parisZone.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
-  }
-
-  //Taipei
-  let taipeiElement = document.querySelector("#taipei");
-
-  if (taipeiElement) {
-    let taipeiDateElement = taipeiElement.querySelector(".date");
-    let taipeiTimeElement = taipeiElement.querySelector(".time");
-
-    let taipeiZone = moment().tz("Asia/Taipei");
-
-    taipeiDateElement.innerHTML = taipeiZone.format("MMMM Do, YYYY");
-
-    taipeiTimeElement.innerHTML = taipeiZone.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
-  }
+  displayCities(citiesArray);
 }
 
 function reloadPage(event) {
   location.reload();
 }
 
-function updateCity(event) {
-  let cityTimeZone = event.target.value;
-
-  if (event.target.value === "current") {
-    cityTimeZone = moment.tz.guess();
-  }
-
-  setInterval(function () {
-    let cityName = cityTimeZone.replace("_", " ").split("/")[1];
-    let cityTime = moment().tz(cityTimeZone);
-    let citiesElement = document.querySelector("#cities");
-
-    citiesElement.innerHTML = `
-  <div class="city last-child added-city">
-    <div class="city_date">
-        <h2>${cityName}</h2>
-        <div class="date">${cityTime.format("MMMM Do, YYYY")}</div>
-    </div>
-    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-      "A"
-    )}</small></div>
-        </div>
-        `;
-  });
-  let citySelectElement = document.querySelector("#city");
-  citySelectElement.style.display = "none";
-
-  let resetButton = document.querySelector("#reset-button");
-  resetButton.style.display = "block";
-  resetButton.addEventListener("click", reloadPage);
-}
-
-updateTime();
-setInterval(updateTime, 1000);
+displayCities(citiesArray);
+setInterval(displayCities, 1000, citiesArray);
 
 let citySelectElement = document.querySelector("#city");
 citySelectElement.addEventListener("change", updateCity);
