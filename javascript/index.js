@@ -29,6 +29,22 @@ function updateTime() {
       "h:mm:ss [<small>]A[</small>]"
     );
   }
+
+  //Taipei
+  let taipeiElement = document.querySelector("#taipei");
+
+  if (taipeiElement) {
+    let taipeiDateElement = taipeiElement.querySelector(".date");
+    let taipeiTimeElement = taipeiElement.querySelector(".time");
+
+    let taipeiZone = moment().tz("Asia/Taipei");
+
+    taipeiDateElement.innerHTML = taipeiZone.format("MMMM Do, YYYY");
+
+    taipeiTimeElement.innerHTML = taipeiZone.format(
+      "h:mm:ss [<small>]A[</small>]"
+    );
+  }
 }
 
 function reloadPage(event) {
@@ -48,7 +64,7 @@ function updateCity(event) {
     let citiesElement = document.querySelector("#cities");
 
     citiesElement.innerHTML = `
-  <div class="city last-child">
+  <div class="city last-child added-city">
     <div class="city_date">
         <h2>${cityName}</h2>
         <div class="date">${cityTime.format("MMMM Do, YYYY")}</div>
